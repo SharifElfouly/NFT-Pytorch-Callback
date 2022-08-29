@@ -4,7 +4,7 @@ from torchvision.datasets import MNIST
 from torchvision.transforms import ToTensor
 import pytorch_lightning as pl
 from model import Model
-from check import NftCallback
+from callback import NftCallback
 
 # setup data
 dataset = MNIST(os.getcwd(), download=True, transform=ToTensor())
