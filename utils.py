@@ -23,11 +23,12 @@ def hash_data(data):
     # hashing the whole data probably does not make sense
     pass
 
-def hash_training(model, owner, acc):
+def hash_training(model, owner, acc, epoch):
     model_hash = hash_model_weights(model)
     size = str(get_model_size(model))
     t = str(time.time())
     acc = str(acc)
+    epoch = str(epoch)
 
-    s = model_hash + owner + size + t + acc
+    s = model_hash + owner + size + t + acc + epoch
     return sha(s)
