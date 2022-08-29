@@ -18,7 +18,7 @@ def hash_model_weights(model):
     # we could use `named_parameters()` here as well
     return sha(str(list(model.parameters())))
 
-def hash_data(data):
+def hash_train_data(data):
     # TODO
     # hashing the whole data probably does not make sense
     pass
