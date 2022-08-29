@@ -15,7 +15,9 @@ class NftCallback(Callback):
 
         self.epochs += 1
 
-        print(self.hashes)
+        print(trainer.val_dataloaders)
+        print("3333333")
 
     def on_train_end(self, trainer, pl_module):
         print("train ended")
+        print(self.hashes)

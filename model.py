@@ -3,28 +3,78 @@ from torch import optim, nn, utils, Tensor
 from torchvision.datasets import MNIST
 from torchvision.transforms import ToTensor
 import pytorch_lightning as pl
+import torch
+from torch.nn import functional as F
 
 
 # define the LightningModule
 class Model(pl.LightningModule):
-    def __init__(self):
-        super().__init__()
-        self.encoder = nn.Sequential(nn.Linear(28 * 28, 64), nn.ReLU(), nn.Linear(64, 3))
-        self.decoder = nn.Sequential(nn.Linear(3, 64), nn.ReLU(), nn.Linear(64, 28 * 28))
+  def __init__(self):
+    super(Model, self).__init__()
+    
+    # mnist images are (1, 28, 28) (channels, width, height) 
+    self.layer_1 = torch.nn.Linear(28 * 28, 128)
+    self.layer_2 = torch.nn.Linear(128, 256)
+    self.layer_3 = torch.nn.Linear(256, 10)
 
-    def training_step(self, batch, batch_idx):
-        # training_step defines the train loop.
-        # it is independent of forward
-        x, y = batch
-        x = x.view(x.size(0), -1)
-        z = self.encoder(x)
-        x_hat = self.decoder(z)
-        loss = nn.functional.mse_loss(x_hat, x)
-        # Logging to TensorBoard by default
-        self.log("train_loss", loss)
-        return loss
+  def forward(self, x):
+      batch_size, channels, width, height = x.size()
+      
+      # (b, 1, 28, 28) -> (b, 1*28*28)
+      x = x.view(batch_size, -1)
 
-    def configure_optimizers(self):
-        optimizer = optim.Adam(self.parameters(), lr=1e-3)
-        return optimizer
+      # layer 1 (b, 1*28*28) -> (b, 128)
+      x = self.layer_1(x)
+      x = torch.relu(x)
 
+      # layer 2 (b, 128) -> (b, 256)
+      x = self.layer_2(x)
+      x = torch.relu(x)
+
+      # layer 3 (b, 256) -> (b, 10)
+      x = self.layer_3(x)
+
+      # probability distribution over labels
+      x = torch.softmax(x, dim=1)
+
+      return x
+
+  def cross_entropy_loss(self, logits, labels):
+    return F.nll_loss(logits, labels)
+
+  def training_step(self, train_batch, batch_idx):
+      x, y = train_batch
+      logits = self.forward(x)
+      loss = self.cross_entropy_loss(logits, y)
+
+      logs = {'train_loss': loss}
+      return {'loss': loss, 'log': logs}
+
+  def validation_step(self, val_batch, batch_idx):
+      # print("VAL STEP")
+      x, y = val_batch
+      logits = self.forward(x)
+      loss = self.cross_entropy_loss(logits, y)
+      return {'val_loss': loss}
+
+  def test_step(self, val_batch, batch_idx):
+      x, y = val_batch
+      logits = self.forward(x)
+      loss = self.cross_entropy_loss(logits, y)
+      return {'test_loss': loss}
+
+  def validation_epoch_end(self, outputs):
+      avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
+      tensorboard_logs = {'val_loss': avg_loss}
+      return {'avg_val_loss': avg_loss, 'log': tensorboard_logs}
+
+  def test_epoch_end(self, outputs):
+      avg_loss = torch.stack([x['test_loss'] for x in outputs]).mean()
+      tensorboard_logs = {'test_loss': avg_loss}
+      return {'avg_test_loss': avg_loss, 'log': tensorboard_logs}
+
+  def configure_optimizers(self):
+    optimizer = torch.optim.Adam(self.parameters())
+    lr_scheduler = {'scheduler': torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma = 0.95),
+                    'name': 'expo_lr'}
+    return [optimizer], [lr_scheduler]

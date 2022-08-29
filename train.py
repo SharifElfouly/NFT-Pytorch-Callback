@@ -11,7 +11,8 @@ EPOCHS = 2
 # setup data
 dataset = MNIST(os.getcwd(), download=True, transform=ToTensor())
 train_loader = utils.data.DataLoader(dataset)
+val_loader = utils.data.DataLoader(dataset)
 
 # train the model (hint: here are some helpful Trainer arguments for rapid idea iteration)
-trainer = pl.Trainer(limit_train_batches=100, max_epochs=EPOCHS, callbacks=[NftCallback()])
-trainer.fit(model=Model(), train_dataloaders=train_loader)
+trainer = pl.Trainer(limit_train_batches=10, max_epochs=EPOCHS, callbacks=[NftCallback()])
+trainer.fit(model=Model(), train_dataloaders=train_loader, val_dataloaders=val_loader)
