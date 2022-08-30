@@ -4,6 +4,7 @@ import time
 def sha(string): return sha256(string.encode()).hexdigest()
 
 def get_model_size(model):
+    "return model size in mb"
     param_size = 0
     for param in model.parameters():
         param_size += param.nelement() * param.element_size()
@@ -25,9 +26,9 @@ def hash_train_data(data):
 
 def hash_training(model, owner, acc, epoch):
     model_hash = hash_model_weights(model)
-    size = str(get_model_size(model))
-    t = str(time.time())
-    acc = str(acc)
+    size  = str(get_model_size(model))
+    t     = str(time.time())
+    acc   = str(acc)
     epoch = str(epoch)
 
     s = model_hash + owner + size + t + acc + epoch

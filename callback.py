@@ -19,6 +19,9 @@ class NftCallback(Callback):
         print(trainer.val_dataloaders)
         print("on_train_epoch_end")
 
+    def on_validation_epoch_end(self, trainer, pl_module):
+        print("on_validation_epoch_end")
+
     def on_train_end(self, trainer, pl_module):
         print(self.hashes)
         print("on_train_end")
