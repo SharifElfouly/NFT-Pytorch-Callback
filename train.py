@@ -2,7 +2,7 @@ from torch import optim, nn, utils, Tensor
 from torchvision.transforms import ToTensor
 import pytorch_lightning as pl
 from model import Model
-from callback import NftCallback
+from nftc.callback import NftCallback
 from torchvision import datasets, transforms
 from torch.utils.data import TensorDataset, DataLoader, random_split
 from data import prepare_data

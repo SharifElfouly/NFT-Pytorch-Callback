@@ -26,8 +26,4 @@ class NftCallback(Callback):
         print("on_train_end")
         # get hash of the model with the lowest loss
         lowest_loss = sorted(self.hashes, key=lambda d: d['loss'], reverse=True)[0]["hash"]
-        print(lowest_loss["hash"])
-        print(lowest_hash)
-
-
-
+        # print(lowest_loss["hash"])
