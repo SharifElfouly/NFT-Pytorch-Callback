@@ -6,6 +6,12 @@ A custom pytorch NFT-checkpoint that hashes the current network weights, some me
 
 This NFT could represent a tradable license of some sort for example.
 
+### Installation
+
+```
+pip3 install nftc
+```
+
 **Description of the project and what problem is it solving**: Trying to determine who actually did the training of a machine learning model is currently very hard. Looking at open-source model zoos today it is nearly impossible to determine who trained which model. The Pytorch NFT checkpoint solves this problem.
 
 A custom NFT is generated each epoch, which proves who generated which network weights. This could be used as a badge of honor or turned into a tradable license.
