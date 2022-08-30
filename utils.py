@@ -32,3 +32,7 @@ def hash_training(model, owner, acc, epoch):
 
     s = model_hash + owner + size + t + acc + epoch
     return sha(s)
+
+def validate(model_hash, model, owner, acc, epoch):
+    "validate if `model_hash` is correct"
+    return model_hash == hash_training(model, owner, acc, epoch)
