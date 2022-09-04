@@ -25,5 +25,17 @@ class NftCallback(Callback):
     def on_train_end(self, trainer, pl_module):
         print("on_train_end")
         # get hash of the model with the lowest loss
-        lowest_loss = sorted(self.hashes, key=lambda d: d['loss'], reverse=True)[0]["hash"]
-        # print(lowest_loss["hash"])
+        # lowest_loss = sorted(self.hashes, key=lambda d: d['loss'], reverse=True)[0]["hash"]
+        self.print_hashes(self.hashes)
+
+    def print_hashes(self, losses):
+        # lowest_loss = sorted(self.hashes, key=lambda d: d['loss'], reverse=True)
+        # print(lowest_loss)
+        for i, loss in enumerate(losses):
+            l = '{:.3f}'.format(round(loss["loss"], 3))
+            h = loss["hash"]
+            print(f"epoch {i}: loss {l} - hash {h}")
+
+    def on_validation_end(self, trainer, pl_module):
+        pass
+
