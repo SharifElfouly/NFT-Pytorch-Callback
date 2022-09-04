@@ -9,27 +9,31 @@ class NftCallback(Callback):
         self.hashes = []
 
     def on_train_epoch_end(self, trainer, pl_module):
-        print("on_train_epoch_end")
+        pass
+        # print("on_train_epoch_end")
 
     def on_validation_epoch_end(self, trainer, pl_module):
-        print("on_validation_epoch_end")
+        loss = float(trainer.callback_metrics["loss"])
 
-        h = hash_training(trainer.model, self.owner, 0, self.epochs)
-        self.hashes.append({
+        h = hash_training(trainer.model, self.owner, loss, self.epochs)
+        d = {
             "epoch": self.epochs, 
-            "loss": float(trainer.callback_metrics["loss"]),
+            "loss": loss,
             "hash": h
-        })
+        }
+        self.hashes.append(d)
+
+        self.print_hash(d)
 
         self.epochs += 1
 
+
     def on_train_end(self, trainer, pl_module):
-        print("on_train_end")
-        # get hash of the model with the lowest loss
+        # print("on_train_end")
         self.print_hashes(self.hashes)
 
     def on_validation_end(self, trainer, pl_module):
-        print("on_val_end")
+        # print("on_val_end")
         pass
 
     def print_hashes(self, losses):

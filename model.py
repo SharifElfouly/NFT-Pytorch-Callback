@@ -51,7 +51,7 @@ class Model(pl.LightningModule):
       return {'loss': loss, 'log': logs}
 
   def validation_step(self, val_batch, batch_idx):
-      print("VAL STEP")
+      # print("VAL STEP")
       x, y = val_batch
       logits = self.forward(x)
       loss = self.cross_entropy_loss(logits, y)

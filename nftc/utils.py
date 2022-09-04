@@ -24,16 +24,16 @@ def hash_train_data(data):
     # hashing the whole data probably does not make sense
     pass
 
-def hash_training(model, owner, acc, epoch):
+def hash_training(model, owner, loss, epoch):
     model_hash = hash_model_weights(model)
-    size  = str(get_model_size(model))
-    t     = str(time.time())
-    acc   = str(acc)
-    epoch = str(epoch)
+    size       = str(get_model_size(model))
+    t          = str(time.time())
+    loss        = str(loss)
+    epoch      = str(epoch)
 
-    s = model_hash + owner + size + t + acc + epoch
+    s = model_hash + owner + size + t + loss + epoch
     return sha(s)
 
-def validate(model_hash, model, owner, acc, epoch):
+def validate(model_hash, model, owner, loss, epoch):
     "validate if `model_hash` is correct"
-    return model_hash == hash_training(model, owner, acc, epoch)
+    return model_hash == hash_training(model, owner, loss, epoch)
