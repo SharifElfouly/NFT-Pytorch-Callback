@@ -5,7 +5,7 @@ from torch.utils.data import TensorDataset, DataLoader, random_split
 from data import prepare_data
 
 VERBOSE = False
-EPOCHS = 20
+EPOCHS = 2
 BATCH_SIZE = 64
 OWNER = "0x34e619ef675d6161868cc16cf929f860f88242f7"
 

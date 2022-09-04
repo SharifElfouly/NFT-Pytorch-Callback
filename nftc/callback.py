@@ -32,6 +32,8 @@ class NftCallback(Callback):
         # print("on_train_end")
         self.print_hashes(self.hashes)
 
+        cprint("Mint Your Model Training NFT now! Visit www.m-nft.com", "red")
+
     def on_validation_end(self, trainer, pl_module):
         # print("on_val_end")
         pass

@@ -28,7 +28,7 @@ def hash_training(model, owner, loss, epoch):
     model_hash = hash_model_weights(model)
     size       = str(get_model_size(model))
     t          = str(time.time())
-    loss        = str(loss)
+    loss       = str(loss)
     epoch      = str(epoch)
 
     s = model_hash + owner + size + t + loss + epoch
