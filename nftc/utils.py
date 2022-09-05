@@ -1,5 +1,7 @@
 from hashlib import sha256
 import time
+import torch
+from datetime import datetime
 
 def sha(string): return sha256(string.encode()).hexdigest()
 
@@ -24,16 +26,17 @@ def hash_train_data(data):
     # hashing the whole data probably does not make sense
     pass
 
-def hash_training(model, owner, loss, epoch):
+def hash_training(model, owner, loss, epoch, date=datetime.now()):
     model_hash = hash_model_weights(model)
     size       = str(get_model_size(model))
-    t          = str(time.time())
-    loss       = str(loss)
+    date       = str(date)
+    loss       = '{:.3f}'.format(loss)
     epoch      = str(epoch)
 
-    s = model_hash + owner + size + t + loss + epoch
+    s = model_hash + owner + size + date + loss + epoch
     return sha(s)
 
-def validate(model_hash, model, owner, loss, epoch):
-    "validate if `model_hash` is correct"
-    return model_hash == hash_training(model, owner, loss, epoch)
+def verify(model_hash, model_path, owner, loss, epoch, date):
+    "verify if `model_hash` is correct"
+    model = torch.load(model_path)
+    return model_hash == hash_training(model, owner, loss, epoch, date)

@@ -58,3 +58,7 @@ class NftCallback(Callback):
         l = '{:.3f}'.format(round(loss["loss"], 3))
         h = loss["hash"]
         print(f"epoch {e}: loss {l} - hash {h}")
+
+    @staticmethod
+    def verify(model_hash, model_path, owner, loss, epoch):
+        return utils.verify(model_hash, model_path, owner, loss, epoch)
