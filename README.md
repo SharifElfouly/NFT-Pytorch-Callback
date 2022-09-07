@@ -6,6 +6,10 @@ A custom pytorch NFT-checkpoint that hashes the current network weights, some me
 
 This NFT could represent a tradable license of some sort for example.
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=9KcuwjUOm4s
+" target="_blank"><img src="http://img.youtube.com/vi/9KcuwjUOm4s/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
 ### MINT
 
 Take your hash and mint your model NFT at `m-nft.com`
@@ -13,10 +17,15 @@ Take your hash and mint your model NFT at `m-nft.com`
 ### Installation
 
 ```
-pip3 install nftc
+pip3 install mnft
 ```
 
-**Description of the project and what problem is it solving**: Trying to determine who actually did the training of a machine learning model is currently very hard. Looking at open-source model zoos today it is nearly impossible to determine who trained which model. The Pytorch NFT checkpoint solves this problem.
+### Mint your NFT
+
+Visit [nft-model.vercel.app](https://nft-model.vercel.app/) to mint your Model NFT.
+
+### Description
+Trying to determine who actually did the training of a machine learning model is currently very hard. Looking at open-source model zoos today it is nearly impossible to determine who trained which model. The Pytorch NFT checkpoint solves this problem.
 
 A custom NFT is generated each epoch, which proves who generated which network weights. This could be used as a badge of honor or turned into a tradable license.
 
