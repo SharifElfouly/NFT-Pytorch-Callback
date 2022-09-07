@@ -7,4 +7,4 @@ from .callback import NftCallback
 
 __version__ = "0.1.0"
 __author__ = 'Sharif'
-__credits__ = 'Argonne National Laboratory'
+__credits__ = 'Algovera'

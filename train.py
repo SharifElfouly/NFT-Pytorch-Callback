@@ -1,13 +1,13 @@
 import pytorch_lightning as pl
 from model import Model
-from nftc.callback import NftCallback
-from nftc.utils import *
+from mnft.callback import NftCallback
+from mnft.utils import *
 from torch.utils.data import TensorDataset, DataLoader, random_split
 from data import prepare_data
 import torch
 
 VERBOSE = False
-EPOCHS = 2
+EPOCHS = 10
 BATCH_SIZE = 64
 OWNER = "0x34e619ef675d6161868cc16cf929f860f88242f7"
 
