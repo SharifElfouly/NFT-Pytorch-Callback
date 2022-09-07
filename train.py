@@ -9,7 +9,7 @@ import torch
 VERBOSE = False
 EPOCHS = 10
 BATCH_SIZE = 64
-OWNER = "0x34e619ef675d6161868cc16cf929f860f88242f7"
+OWNER = "0x34e619ef675d6161868cc16cf929f860f88242f6"
 
 train, val, test = prepare_data()
 
