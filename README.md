@@ -6,6 +6,10 @@ A custom pytorch NFT-checkpoint that hashes the current network weights, some me
 
 This NFT could represent a tradable license of some sort for example.
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=9KcuwjUOm4s
+" target="_blank"><img src="http://img.youtube.com/vi/9KcuwjUOm4s/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
 ### MINT
 
 Take your hash and mint your model NFT at `m-nft.com`
