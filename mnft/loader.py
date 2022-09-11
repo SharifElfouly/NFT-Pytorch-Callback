@@ -16,7 +16,7 @@ def create_sequences(batch_size, dataset_size, epochs):
             np.random.default_rng().choice(
                 dataset_size, size=dataset_size, replace=False
             )
-            for i in range(epochs)
+            for _ in range(epochs)
         ]
     )
     num_batch = int(len(sequence) // batch_size)
@@ -40,8 +40,9 @@ def get_train_loader(dataset, batch_size, epochs):
             break
         print(i, len(subset.dataset.data))
         m.update(d.__str__().encode("utf-8"))
-    f = open(os.path.join(SAVE_DIR, "hash.txt"), "x")
-    f.write(m.hexdigest())
-    f.close()
+    # TODO: uncomment
+    # f = open(os.path.join(SAVE_DIR, "hash.txt"), "x")
+    # f.write(m.hexdigest())
+    # f.close()
 
     return trainloader

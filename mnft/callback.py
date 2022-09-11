@@ -1,14 +1,25 @@
 from pytorch_lightning.callbacks import Callback
 from .utils import hash_training
 from termcolor import cprint
+import torch
+import os
+
 
 class NftCallback(Callback):
-    def __init__(self, owner):
+    def __init__(self, owner, save_dir):
         self.owner = owner
+        self.save_dir = save_dir
         self.epochs = 0
         self.hashes = []
 
     def on_train_epoch_end(self, trainer, pl_module):
+        state = {"net": trainer.model.state_dict(), "optimizer": trainer.optimizers[0]}
+
+        # TODO: save scheduler
+        # if scheduler is not None:
+        #     state["scheduler"] = scheduler.state_dict()
+        torch.save(state, os.path.join(self.save_dir, f"model_step_{self.epochs}"))
+
         pass
         # print("on_train_epoch_end")
 
@@ -16,25 +27,22 @@ class NftCallback(Callback):
         loss = float(trainer.callback_metrics["loss"])
 
         h = hash_training(trainer.model, self.owner, loss, self.epochs)
-        d = {
-            "epoch": self.epochs, 
-            "loss": loss,
-            "hash": h
-        }
+        d = {"epoch": self.epochs, "loss": loss, "hash": h}
         self.hashes.append(d)
 
         self.print_hash(d)
 
         self.epochs += 1
 
-
     def on_train_end(self, trainer, pl_module):
         # print("on_train_end")
         self.print_hashes(self.hashes)
 
-        cprint("Mint Your Model Training NFT now! Visit www.m-nft.com",
-                "red",
-                attrs=["bold", "blink"])
+        cprint(
+            "Mint Your Model Training NFT now! Visit www.m-nft.com",
+            "red",
+            attrs=["bold", "blink"],
+        )
 
     def on_validation_end(self, trainer, pl_module):
         # print("on_val_end")
@@ -49,13 +57,13 @@ class NftCallback(Callback):
         print()
 
         cprint("Lowest Loss", "green", attrs=["bold"])
-        lowest_loss = sorted(self.hashes, key=lambda d: d['loss'], reverse=False)[0]
+        lowest_loss = sorted(self.hashes, key=lambda d: d["loss"], reverse=False)[0]
         self.print_hash(lowest_loss)
         print()
 
     def print_hash(self, loss):
         e = loss["epoch"]
-        l = '{:.3f}'.format(round(loss["loss"], 3))
+        l = "{:.3f}".format(round(loss["loss"], 3))
         h = loss["hash"]
         print(f"epoch {e}: loss {l} - hash {h}")
 

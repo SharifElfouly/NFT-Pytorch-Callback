@@ -8,6 +8,8 @@ import torch
 from mnft.loader import get_train_loader
 import numpy as np
 
+SAVE_DIR = "proof"
+
 VERBOSE = False
 EPOCHS = 2
 BATCH_SIZE = 256
@@ -20,14 +22,14 @@ train_loader = DataLoader(train, batch_size=BATCH_SIZE)
 val_loader = DataLoader(val, batch_size=BATCH_SIZE)
 test_loader = DataLoader(test, batch_size=BATCH_SIZE)
 
-get_train_loader(train, BATCH_SIZE, EPOCHS)
+# get_train_loader(train, BATCH_SIZE, EPOCHS)
 
-# model = Model()
+model = Model()
 
-# trainer = pl.Trainer(
-#     max_epochs=EPOCHS, callbacks=[NftCallback(OWNER)], enable_progress_bar=VERBOSE
-# )
-# trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+trainer = pl.Trainer(
+    max_epochs=EPOCHS, callbacks=[NftCallback(OWNER, SAVE_DIR)], enable_progress_bar=VERBOSE
+)
+trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
 # # save model
 # torch.save(model, "test-model")
