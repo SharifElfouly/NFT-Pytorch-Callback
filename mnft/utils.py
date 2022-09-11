@@ -1,5 +1,4 @@
 from hashlib import sha256
-import time
 import torch
 from datetime import datetime
 import hashlib
@@ -51,6 +50,10 @@ def verify(model_hash, model_path, owner, loss, epoch, date):
 
 
 def hash_subset(subset):
+    """
+    pass a `torch.utils.data.Subset` object. this is the one that is passed
+    to the dataloader.
+    """
     m = hashlib.sha256()
     for d in subset.dataset.data:
         m.update(d.__str__().encode("utf-8"))
