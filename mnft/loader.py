@@ -3,6 +3,11 @@ import hashlib
 import os
 import torch
 
+SAVE_DIR = "proof"
+
+if not os.path.exists(SAVE_DIR):
+    os.mkdir(SAVE_DIR)
+
 
 def create_sequences(batch_size, dataset_size, epochs):
     # create a sequence of data indices used for training
@@ -29,9 +34,13 @@ def get_train_loader(dataset, batch_size, epochs):
     )
 
     m = hashlib.sha256()
-    for d in subset.dataset.data:
+    for i, d in enumerate(subset.dataset.data):
+        # TODO: remove for prod
+        if i == 200:
+            break
+        print(i, len(subset.dataset.data))
         m.update(d.__str__().encode("utf-8"))
-    f = open(os.path.join(save_dir, "hash.txt"), "x")
+    f = open(os.path.join(SAVE_DIR, "hash.txt"), "x")
     f.write(m.hexdigest())
     f.close()
 

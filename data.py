@@ -5,6 +5,7 @@ from torchvision.datasets import MNIST
 from torch.utils.data import Dataset
 from torchvision import datasets
 from torchvision.transforms import ToTensor
+from torch.utils.data import Dataset
 import torch
 
 

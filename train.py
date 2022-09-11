@@ -6,10 +6,11 @@ from torch.utils.data import DataLoader
 from data import prepare_data
 import torch
 from mnft.loader import get_train_loader
+import numpy as np
 
 VERBOSE = False
-EPOCHS = 10
-BATCH_SIZE = 64
+EPOCHS = 2
+BATCH_SIZE = 256
 OWNER = "0x34e619ef675d6161868cc16cf929f860f88242f6"
 
 # we have to return datasets!
@@ -21,12 +22,12 @@ test_loader = DataLoader(test, batch_size=BATCH_SIZE)
 
 get_train_loader(train, BATCH_SIZE, EPOCHS)
 
-model = Model()
+# model = Model()
 
-trainer = pl.Trainer(
-    max_epochs=EPOCHS, callbacks=[NftCallback(OWNER)], enable_progress_bar=VERBOSE
-)
-trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+# trainer = pl.Trainer(
+#     max_epochs=EPOCHS, callbacks=[NftCallback(OWNER)], enable_progress_bar=VERBOSE
+# )
+# trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
-# save model
-torch.save(model, "test-model")
+# # save model
+# torch.save(model, "test-model")
