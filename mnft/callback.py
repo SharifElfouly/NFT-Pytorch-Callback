@@ -12,7 +12,12 @@ class NftCallback(Callback):
         self.epochs = 0
         self.hashes = []
 
+    def on_train_epoch_start(self, trainer, pl_module):
+        print("on_train_epoch_start")
+        self.epochs += 1
+
     def on_train_epoch_end(self, trainer, pl_module):
+        print("on_train_epoch_end")
         state = {"net": trainer.model.state_dict(), "optimizer": trainer.optimizers[0]}
 
         # TODO: save scheduler
@@ -20,10 +25,8 @@ class NftCallback(Callback):
         #     state["scheduler"] = scheduler.state_dict()
         torch.save(state, os.path.join(self.save_dir, f"model_step_{self.epochs}"))
 
-        pass
-        # print("on_train_epoch_end")
-
     def on_validation_epoch_end(self, trainer, pl_module):
+        print("on_validation_epoch_end")
         loss = float(trainer.callback_metrics["loss"])
 
         h = hash_training(trainer.model, self.owner, loss, self.epochs)
@@ -31,8 +34,6 @@ class NftCallback(Callback):
         self.hashes.append(d)
 
         self.print_hash(d)
-
-        self.epochs += 1
 
     def on_train_end(self, trainer, pl_module):
         # print("on_train_end")

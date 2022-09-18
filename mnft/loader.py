@@ -35,14 +35,17 @@ def get_train_loader(dataset, batch_size, epochs):
 
     m = hashlib.sha256()
     for i, d in enumerate(subset.dataset.data):
+
+        ####################
         # TODO: remove for prod
-        if i == 200:
+        if i == 100:
             break
+        ####################
+
         print(i, len(subset.dataset.data))
         m.update(d.__str__().encode("utf-8"))
-    # TODO: uncomment
-    # f = open(os.path.join(SAVE_DIR, "hash.txt"), "x")
-    # f.write(m.hexdigest())
-    # f.close()
+
+    with open(os.path.join(SAVE_DIR, "hash.txt"), "w") as f:
+        f.write(m.hexdigest())
 
     return trainloader

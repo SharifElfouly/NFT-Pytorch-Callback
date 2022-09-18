@@ -18,11 +18,11 @@ OWNER = "0x34e619ef675d6161868cc16cf929f860f88242f6"
 # we have to return datasets!
 train, val, test = prepare_data()
 
-train_loader = DataLoader(train, batch_size=BATCH_SIZE)
+# train_loader = DataLoader(train, batch_size=BATCH_SIZE)
 val_loader = DataLoader(val, batch_size=BATCH_SIZE)
 test_loader = DataLoader(test, batch_size=BATCH_SIZE)
 
-# get_train_loader(train, BATCH_SIZE, EPOCHS)
+train_loader = get_train_loader(train, BATCH_SIZE, EPOCHS)
 
 model = Model()
 
